@@ -31,14 +31,13 @@ function init() {
     let firstSample = names[0];
     create_chart(firstSample);
     console.log(create_chart);
+    d3.selectAll(dropdown).on("change", updatePlotly);
 
 })};
 
 
-
-
 // Create chart function
-function create_chart(samples) {
+function create_chart(sample) {
 
     d3.json(url).then((data)=> {
         
@@ -49,8 +48,9 @@ function create_chart(samples) {
     // reversedData = slicedData.reverse();
 
     // 
-    let samples = data.samples.filter(sampleObj => sampleObj.id == samples);
-    let result = samples[0];
+    let samples = data.samples;
+    let resultArray = samples.filter(sampleObj => sampleObj.id == sample);
+    let result = resultArray[0];
     console.log(result)
 
     let otu_ids = result.otu_ids.slice(0, 10).reverse();
@@ -71,12 +71,24 @@ function create_chart(samples) {
 
 })};
 
+// Update chart function
+function updatePlotly() {
+
+    let dropdo
+
+
+// }
+// choices.on("change", function(){
+//     var choice = choices.property("value");
+//     console.log(choice)});
+
+
+
 // Call the init function
 init();
 
-// choices.on("change", function(){
-//     var choice = choices.property("value");
-//     console.log(choice);
+
+
 //     console.log(data[choice])});
 
 // function create_plot
