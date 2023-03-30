@@ -20,6 +20,11 @@ function init() {
         console.log(names[i]);
     };
 
+    dropdown.on("change", function(){
+        var choice = dropdown.property("value");
+        console.log(choice);
+    });
+
     });
 
 // Call the rest of the functions
@@ -27,34 +32,39 @@ function init() {
     console.log(create_chart);
 };
 
-  
-// Call the init function
-init();
 
 // Create chart function
 function create_chart() {
 
     d3.json(url).then((data)=> {
+        
+    // Sort the data by OTUs 
+    // let sortedByOTUs = data.sort((a, b) => b.sample_values - a.sample_values);
+    
+    // Reverse the array to accommodate Plotly's defaults
+    // reversedData = slicedData.reverse();
 
-    let sample_values = data.sample_values;
-    let otu_ids = data.otu_ids;
-    let otu_labels = data.otu_labels;
+    // 
+    let sample_values = choice.sample_values.slice(0,10);
+    let otu_ids = choice.sample_values.slice(0,10);
+    let otu_labels = choice.otu_labels.slice(0,10);
 
     let plot_data = [
         {
         x: sample_values,
         y: otu_ids,
         text: otu_labels,
-        type: 'bar'
+        type: 'bar',
+        orientation: 'h'
         }
     ];
 
-     Plotly.newPlot('plot', plot_data);
+    Plotly.newPlot('plot', plot_data);
 
-    })};
+})};
 
-
-
+// Call the init function
+init();
 
 // choices.on("change", function(){
 //     var choice = choices.property("value");
