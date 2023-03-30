@@ -3,15 +3,16 @@ let url = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1
 
 function init() {
 
-// Fetch JSON data and read in using D3
-    d3.json(url).then((data)=> {
-        console.log(data);
-
-// First select dropdown menu 
+    // First select dropdown menu 
     var dropdown = d3.select("#selDataset");
 
+    // Fetch JSON data and read in using D3
+    d3.json(url).then((data)=> {
+    console.log(data);
+    
     // Add names to a variable 
     names = data.names;
+
     console.log(names);
 
     // Loop through names and append them to the dropdown
@@ -22,26 +23,24 @@ function init() {
 
     dropdown.on("onChange", function(){
         var choice = dropdown.property("value");
-        console.log(d3.event.target);
-        // console.log(choice);
+        // console.log(d3.event.target);
+        console.log(choice);
     });
 
-    });
-
-// Call the rest of the functions
-    create_chart();
+    // Use the first sample from the list to build the initial plots
+    let firstSample = names[0];
+    create_chart(firstSample);
     console.log(create_chart);
-};
 
+})};
 
-// Load metadata
 
 
 
 // Create chart function
-function create_chart(sample) {
+function create_chart(samples) {
 
-    d3.json(url).then(function(data) {
+    d3.json(url).then((data)=> {
         
     // Sort the data by OTUs 
     // let sortedByOTUs = data.sort((a, b) => b.sample_values - a.sample_values);
@@ -50,9 +49,9 @@ function create_chart(sample) {
     // reversedData = slicedData.reverse();
 
     // 
-    let samples = data.samples.filter(sampleObj => sampleObj.id == sample);
+    let samples = data.samples.filter(sampleObj => sampleObj.id == samples);
     let result = samples[0];
-    // let result = resultArray[0];
+    console.log(result)
 
     let otu_ids = result.otu_ids.slice(0, 10).reverse();
     let otu_labels = result.otu_labels.slice(0, 10).reverse();
