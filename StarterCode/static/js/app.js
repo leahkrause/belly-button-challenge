@@ -20,9 +20,10 @@ function init() {
         console.log(names[i]);
     };
 
-    dropdown.on("change", function(){
+    dropdown.on("onChange", function(){
         var choice = dropdown.property("value");
-        console.log(choice);
+        console.log(d3.event.target);
+        // console.log(choice);
     });
 
     });
@@ -33,10 +34,14 @@ function init() {
 };
 
 
-// Create chart function
-function create_chart() {
+// Load metadata
 
-    d3.json(url).then((data)=> {
+
+
+// Create chart function
+function create_chart(sample) {
+
+    d3.json(url).then(function(data) {
         
     // Sort the data by OTUs 
     // let sortedByOTUs = data.sort((a, b) => b.sample_values - a.sample_values);
@@ -45,21 +50,25 @@ function create_chart() {
     // reversedData = slicedData.reverse();
 
     // 
-    let sample_values = choice.sample_values.slice(0,10);
-    let otu_ids = choice.sample_values.slice(0,10);
-    let otu_labels = choice.otu_labels.slice(0,10);
+    let samples = data.samples.filter(sampleObj => sampleObj.id == sample);
+    let result = samples[0];
+    // let result = resultArray[0];
+
+    let otu_ids = result.otu_ids.slice(0, 10).reverse();
+    let otu_labels = result.otu_labels.slice(0, 10).reverse();
+    let sample_values = result.sample_values.slice(0, 10).reverse();
 
     let plot_data = [
         {
         x: sample_values,
         y: otu_ids,
         text: otu_labels,
-        type: 'bar',
-        orientation: 'h'
+        type: "bar",
+        orientation: "h"
         }
     ];
 
-    Plotly.newPlot('plot', plot_data);
+    Plotly.newPlot("bar", plot_data);
 
 })};
 
@@ -70,8 +79,6 @@ init();
 //     var choice = choices.property("value");
 //     console.log(choice);
 //     console.log(data[choice])});
-
-
 
 // function create_plot
 
