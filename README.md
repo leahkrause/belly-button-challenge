@@ -14,4 +14,4 @@ I created a gauge chart using Plotly to show the gauge of washing frequency.
 
 I also created a Plotly bubble chart to display a bubble visual of the concentration of OTU IDs in the sample. 
 
-*** Some tutor assistance was used during this project to answer questions ***
+
